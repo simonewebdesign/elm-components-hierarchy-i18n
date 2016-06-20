@@ -12,13 +12,19 @@ import Form.Input.Number
 
 type alias Model =
   { name : String
-  , textInputs : List ( ID, Form.Input.Text.Model )
-  , numberInputs : List ( ID, Form.Input.Number.Model )
+  , textInputs : List IndexedInputText
+  , numberInputs : List IndexedInputNumber
   }
 
 
 type alias ID =
   String
+
+type alias IndexedInputText =
+  ( ID, Form.Input.Text.Model )
+
+type alias IndexedInputNumber =
+  ( ID, Form.Input.Number.Model )
 
 
 initialModel : Model
@@ -47,6 +53,7 @@ type Msg
   = InputTextMsg ID Form.Input.Text.Msg
   | InputNumberMsg ID Form.Input.Number.Msg
 
+
 update : Msg -> Model -> Model
 update msg model =
   case msg of
@@ -73,24 +80,23 @@ update msg model =
         { model | numberInputs = List.map updateInput model.numberInputs }
 
 
-
 view : Model -> Html Msg
 view model =
   div []
       [ label [ for model.name ] [ text model.name ]
       , div [] <|
-        (List.map viewTextInputs model.textInputs) ++
-        (List.map viewNumberInputs model.numberInputs)
+        (List.map viewTextInput model.textInputs) ++
+        (List.map viewNumberInput model.numberInputs)
       ]
 
 
-viewTextInputs : ( ID, Form.Input.Text.Model ) -> Html Msg
-viewTextInputs =
+viewTextInput : IndexedInputText -> Html Msg
+viewTextInput =
   \( id, model ) ->
     Html.map (InputTextMsg id) (Form.Input.Text.view model)
 
 
-viewNumberInputs : ( ID, Form.Input.Number.Model ) -> Html Msg
-viewNumberInputs =
+viewNumberInput : IndexedInputNumber -> Html Msg
+viewNumberInput =
   \( id, model ) ->
     Html.map (InputNumberMsg id) (Form.Input.Number.view model)
