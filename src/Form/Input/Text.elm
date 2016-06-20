@@ -1,14 +1,15 @@
 module Form.Input.Text exposing (..)
 
-import Html exposing (Html, text)
+import Html exposing (Html, div, input, label, text)
+import Html.Attributes exposing (class, for, id, type')
+import Html.Events exposing (onInput)
 
-
-type alias Text = Model
 
 type alias Model =
   { name : String
   , value : String
   }
+
 
 initialModel : Model
 initialModel =
@@ -17,17 +18,23 @@ initialModel =
   }
 
 
-type Msg =
-  SetValue String
+type Msg
+  = Change String
 
 
 update : Msg -> Model -> Model
 update msg model =
   case msg of
-    SetValue newVal ->
-      { model | value = newVal }
+    Change newValue ->
+      { model | value = newValue }
 
 
 view : Model -> Html Msg
 view model =
-  text <| "Text component. view model debug: " ++ (toString model) 
+  div []
+      [ label [ for model.name ] [ text model.name ]
+      , input [ type' "text"
+              , id model.name
+              , onInput Change
+              ] []
+      ]
