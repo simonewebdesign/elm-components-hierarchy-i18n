@@ -1,6 +1,7 @@
 import Html exposing (..)
 import Html.App as Html
 import Html.Attributes exposing (class)
+import Html.Events exposing (onClick)
 
 --import Form.Input
 import Form.Input.Text
@@ -70,6 +71,7 @@ type Msg
   | FieldsetMsg Form.Wrapper.Fieldset.Msg
   | TextMsg Form.Input.Text.Msg
   | NumberMsg Form.Input.Number.Msg
+  | ChangeLanguage Language
   --| UpdateInput Path Input
 
 
@@ -87,6 +89,9 @@ update msg model =
 
     NumberMsg subMsg ->
       { model | number = Form.Input.Number.update subMsg model.number } ! []
+
+    ChangeLanguage lang ->
+      { model | language = lang } ! []
 
     --UpdateInput path newInput ->
     --  let
@@ -125,10 +130,16 @@ view ({text} as model) =
         , Html.map TextMsg (Form.Input.Text.view { text | translate = translate model.language })
         , Html.map NumberMsg (Form.Input.Number.view model.number)
         ]
-    --, div
-    --    [ class "buttons" ]
-    --    [ button
-    --        [ onClick <| UpdateInput ["someTextField"] <| IText <| Form.Input.Text.Model "someTextField" "changed!" ]
-    --        [ text "Change the value of someTextField" ]
-    --    ]
+    , div
+        [ class "buttons" ]
+        [ button
+            [ onClick <| ChangeLanguage English ]
+            [ Html.text "Change to English" ]
+        , button
+            [ onClick <| ChangeLanguage Spanish ]
+            [ Html.text "Change to Spanish" ]
+          -- button
+            --[ onClick <| UpdateInput ["someTextField"] <| IText <| Form.Input.Text.Model "someTextField" "changed!" ]
+            --[ text "Change the value of someTextField" ]
+        ]
     ]
