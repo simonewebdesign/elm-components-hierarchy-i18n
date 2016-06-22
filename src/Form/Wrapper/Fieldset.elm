@@ -32,10 +32,10 @@ initialModel =
   { name = "defaultFieldsetName"
   , textInputs =
       [ ( "someTextField"
-        , { name = "someTextField", value = "Some initial value" }
+        , { name = "someTextField", value = "Some initial value", translate = \_ -> "" }
         )
       , ( "someAnotherTextField"
-        , { name = "someAnotherTextField", value = "Some another initial value" }
+        , { name = "someAnotherTextField", value = "Some another initial value", translate = \_ -> "" }
         )
       ]
   , numberInputs =

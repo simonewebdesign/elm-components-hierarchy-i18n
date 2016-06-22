@@ -1,12 +1,13 @@
 import Html exposing (..)
 import Html.App as Html
 import Html.Attributes exposing (class)
-import Html.Events exposing (onClick)
 
-import Form.Input
+--import Form.Input
 import Form.Input.Text
 import Form.Input.Number
 import Form.Wrapper.Fieldset
+
+import Translation exposing (Language(..), translate)
 
 
 main : Program Never
@@ -31,6 +32,7 @@ type alias Model =
   { fieldset : Form.Wrapper.Fieldset.Model
   , text : Form.Input.Text.Model
   , number : Form.Input.Number.Model
+  , language : Language
   }
   --{ inputs : List ( Path, Form.Input.Input )
   --, fieldsets : List ( ID, Form.Input.Fieldset )
@@ -52,6 +54,7 @@ initialModel =
   { fieldset = Form.Wrapper.Fieldset.initialModel
   , text = Form.Input.Text.initialModel
   , number = Form.Input.Number.initialModel
+  , language = English
   }
 
 
@@ -112,14 +115,14 @@ subscriptions model =
 -- VIEW
 
 view : Model -> Html Msg
-view model =
+view ({text} as model) =
   div []
-    [ text "Hello, world!"
-    , text (toString model)
+    [ Html.text "Hello, world!"
+    , Html.text (toString model)
     , div
         [ class "inputs" ]
         [ Html.map FieldsetMsg (Form.Wrapper.Fieldset.view model.fieldset)
-        , Html.map TextMsg (Form.Input.Text.view model.text)
+        , Html.map TextMsg (Form.Input.Text.view { text | translate = translate model.language })
         , Html.map NumberMsg (Form.Input.Number.view model.number)
         ]
     --, div
