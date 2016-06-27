@@ -3,6 +3,7 @@ module Form.Wrapper.Fieldset exposing (..)
 import Html.App as Html
 import Html exposing (Html, div, input, label, text)
 import Html.Attributes exposing (class, for, id, type')
+import Translation exposing (Language(..))
 --import Html.Events exposing (onInput)
 
 --import Form.Input
@@ -32,10 +33,10 @@ initialModel =
   { name = "defaultFieldsetName"
   , textInputs =
       [ ( "someTextField"
-        , { name = "someTextField", value = "Some initial value", translate = \_ -> "" }
+        , { name = "someTextField", value = "Some initial value", lang = English }
         )
       , ( "someAnotherTextField"
-        , { name = "someAnotherTextField", value = "Some another initial value", translate = \_ -> "" }
+        , { name = "someAnotherTextField", value = "Some another initial value", lang = English }
         )
       ]
   , numberInputs =

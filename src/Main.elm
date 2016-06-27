@@ -127,7 +127,7 @@ view ({text} as model) =
     , div
         [ class "inputs" ]
         [ Html.map FieldsetMsg (Form.Wrapper.Fieldset.view model.fieldset)
-        , Html.map TextMsg (Form.Input.Text.view { text | translate = translate model.language })
+        , Html.map TextMsg (Form.Input.Text.view { text | lang = model.language })
         , Html.map NumberMsg (Form.Input.Number.view model.number)
         ]
     , div
